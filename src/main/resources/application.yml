@@ -1,0 +1,61 @@
+
+# 공통환경
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: wotjd0113@gachon.ac.kr
+    password: xitfwbelmtbzddkq
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+
+  profiles:
+    active: test
+---
+# prod
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mariadb://localhost:3306/sharingcar
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: testuser
+    password: zerobase
+
+---
+
+# test
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database: h2
+    generate-ddl: off
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;MODE=MySQL;
+    username: SA
+    password:
+
+
+
+
+
+
+
