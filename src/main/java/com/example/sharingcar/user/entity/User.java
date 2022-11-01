@@ -3,8 +3,14 @@ package com.example.sharingcar.user.entity;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Data
 public class User {
