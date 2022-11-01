@@ -25,20 +25,20 @@ public class UserServiceImpl implements UserService {
 		if (optionalUser.isPresent()) {
 			return false;
 		}
-		String uuid = UUID.randomUUID().toString();
 
-		User user = new User();
-		user.setEmail(parameter.getEmail());
-		user.setPassword(parameter.getPassword());
-		user.setName(parameter.getName());
-		user.setBirth(parameter.getBirth());
-		user.setPhone(parameter.getPhone());
-		user.setLicense(parameter.getLicense());
-		user.setAddress(parameter.getAddress());
-		user.setDetail(parameter.getDetail());
-		user.setRegDt(LocalDateTime.now());
-		user.setEmailAuthYn(false);
-		user.setEmailAuthKey(uuid);
+		String uuid = UUID.randomUUID().toString();
+		User user = User.builder()
+			.email(parameter.getEmail())
+			.password(parameter.getPassword())
+			.name(parameter.getName())
+			.birth(parameter.getBirth())
+			.phone(parameter.getPhone())
+			.license(parameter.getLicense())
+			.address(parameter.getAddress())
+			.detail(parameter.getDetail())
+			.regDt(LocalDateTime.now())
+			.emailAuthYn(false)
+			.emailAuthKey(uuid).build();
 		userRepository.save(user);
 
 		String email = parameter.getEmail();
