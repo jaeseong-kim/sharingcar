@@ -43,12 +43,10 @@ public class UserServiceImpl implements UserService {
 
 		String email = parameter.getEmail();
 		String subject = "회원가입을 축하드립니다. 계정을 활성화하세요.";
-		String text = "<html><body>"
-			+ "<p>자차보단 공유차, SHARINGCAR입니다.</p>"
-			+ "<p>" + parameter.getName() + "님! 회원가입을 축하드립니다.</p>"
-			+ "<p>링크를 클릭해 계정을 활성화하세요!</p>"
-			+ "<a href='http://localhost:8080/user/authorize_email?id=" + uuid + ">계정 활성화</a>"
-			+ "</body></html>";
+		String text =  " <p>자차보단 공유차, SHARINGCAR입니다.</p> "
+			+ " <p>" + parameter.getName() + "님! 회원가입을 축하드립니다.</p> "
+			+ " <p>링크를 클릭해 계정을 활성화하세요!</p> "
+			+ " <a href=http://localhost:8080/user/authorize_email?id=" + uuid + ">계정 활성화</a>";
 		mailComponent.sendMail(email, subject, text);
 
 		return true;
