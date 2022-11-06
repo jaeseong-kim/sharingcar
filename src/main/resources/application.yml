@@ -19,7 +19,7 @@ spring:
             enable: true
 
   profiles:
-    active: test
+    active: prod
 ---
 # prod
 
