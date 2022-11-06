@@ -24,7 +24,7 @@ public class MailComponent {
 					true, "UTF-8");
 				mimeMessageHelper.setTo(email);
 				mimeMessageHelper.setSubject(subject);
-				mimeMessageHelper.setText(text);
+				mimeMessageHelper.setText(text, true);
 			}
 		};
 		try {
