@@ -11,7 +11,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: wotjd0113@gachon.ac.kr
-    password: xitfwbelmtbzddkq
+    password: ENC(eb9axCjStU0YPINKRvMvI7UAaQZdkhZ0eiVsQRQi58Q=)
     properties:
       mail:
         smtp:
@@ -19,7 +19,12 @@ spring:
             enable: true
 
   profiles:
-    active: prod
+    active: test
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
 
 ---
 # prod
@@ -32,7 +37,7 @@ spring:
     url: jdbc:mariadb://localhost:3306/sharingcar
     driver-class-name: org.mariadb.jdbc.Driver
     username: testuser
-    password: zerobase
+    password: ENC(RoN6tnQdziCZ283uAOMSnV7nHyR/k3HP)
 
 ---
 
