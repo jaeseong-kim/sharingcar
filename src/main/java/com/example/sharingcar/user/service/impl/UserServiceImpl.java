@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean register(UserInput parameter) {
 
-		Optional<User> optionalUser = userRepository.findById("email");
+		Optional<User> optionalUser = userRepository.findById(parameter.getEmail());
 		if (optionalUser.isPresent()) {
 			return false;
 		}
@@ -68,6 +68,9 @@ public class UserServiceImpl implements UserService {
 		}
 
 		User user = optionalUser.get();
+		if (user.isEmailAuthYn()) {
+			return false;
+		}
 		user.setEmailAuthYn(true);
 		user.setEmailAuthDt(LocalDateTime.now());
 		userRepository.save(user);
@@ -83,11 +86,15 @@ public class UserServiceImpl implements UserService {
 		}
 
 		User user = optionalUser.get();
-		if(!user.isEmailAuthYn()){
+		if (!user.isEmailAuthYn()) {
 			throw new EmailNotAuthException("이메일을 인증해 주세요.");
 		}
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
 		grantedAuthorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+		if (user.isAdminYn()) {
+			grantedAuthorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		}
 
 		return new org.springframework.security.core.userdetails.User(
 			user.getEmail(), user.getPassword(), grantedAuthorityList
