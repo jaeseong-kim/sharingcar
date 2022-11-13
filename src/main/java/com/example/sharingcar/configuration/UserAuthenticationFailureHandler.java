@@ -1,5 +1,6 @@
 package com.example.sharingcar.configuration;
 
+import com.example.sharingcar.user.error.ErrorType;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,15 +15,15 @@ public class UserAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 		AuthenticationException exception) throws IOException, ServletException {
 
-		String msg = "아이디 및 비밀번호가 일치하지 않습니다.";
+		ErrorType error = ErrorType.MISMATCH_ID_PASSWORD;
 
 		if (exception instanceof InternalAuthenticationServiceException) {
-			msg = "이메일 인증 후 이용해주세요.";
+			error = ErrorType.NOT_AUTH_EMAIL;
 		}
 
 		setUseForward(true);
 		setDefaultFailureUrl("/user/login?error=true");
-		request.setAttribute("errorMessage", msg);
+		request.setAttribute("errorMessage", error.getS());
 
 		super.onAuthenticationFailure(request, response, exception);
 	}
