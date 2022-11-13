@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>차량 추가</title>
+</head>
+<body>
+<div th:if="${result eq true}">
+	<p>차량 추가에 성공했습니다.</p>
+</div>
+
+<div th:if="${result eq false}">
+	<p>
+		차량 추가에 실패했습니다.
+	</p>
+</div>
+<div>
+	<a href="/admin/main">홈으로 가기</a>
+</div>
+</body>
+</html>

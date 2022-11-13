@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>차량 관리</title>
+	<style>
+		.list table{
+			width: 100%;
+			border-collapse: collapse;
+		}
+		.list table th{
+			font-size: 15px;
+		}
+		.list table th, .list table td{
+      border: solid 1px #000;
+		}
+		.nocar{
+			text-align: center;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function() {
+      $('form[name=deleteForm]').on('submit', function () {
+
+        if (!confirm('차량을 삭제하시겠습니까?')) {
+          return false;
+        }
+
+      });
+    });
+    $(document).ready(function() {
+      $('form[name=changeStatus]').on('submit',function(){
+
+        if(!confirm('차량 상태를 변경하시겠습니까?')){
+          return false;
+        }
+
+      });
+		});
+	</script>
+</head>
+<body>
+	<h1>차량 관리</h1>
+	<div>
+		<a href="/admin/main">관리자 홈</a>
+		<a href="/admin/car/car_add">차량 추가</a>
+		<a href="/user/logout">로그아웃</a>
+	</div>
+	<div class="list">
+		<table>
+			<thead>
+				<tr>
+					<th>차량번호</th>
+					<th>차량이름</th>
+					<th>차종</th>
+					<th>위치</th>
+					<th>대여료(10분당)</th>
+					<th>보험료(10분당)</th>
+					<th>주행료(km당)</th>
+					<th>차량상태</th>
+					<th>추가날짜</th>
+					<th>비고</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="x : ${list}">
+					<td th:text="${x.carNumber}"></td>
+					<td th:text="${x.carName}"></td>
+					<td th:text="${x.type}"></td>
+					<td th:text="${x.location}"></td>
+					<td th:text="${x.rentalFeePerTenMin}"></td>
+					<td th:text="${x.insuranceFeePerTenMin}"></td>
+					<td th:text="${x.drivingFeePerKm}"></td>
+					<td>
+						<p th:if="${x.status}">사용중</p>
+						<p th:if="${x.status eq false}">점검중</p>
+					</td>
+					<td th:text="${x.addDt}"></td>
+					<td>
+						<form name="deleteForm" method="post" action="/admin/car/car_delete">
+							<input type="hidden" name="carNumber" th:value="${x.carNumber}"/>
+							<button type="submit">삭제</button>
+						</form>
+						<form name="changeStatus" method="post" action="/admin/car/car_change">
+							<input type="hidden" name="carNumber" th:value="${x.carNumber}"/>
+							<button type="submit">상태변경</button>
+						</form>
+					</td>
+				</tr>
+				<tr th:if="${#lists.size(list)<1}">
+					<td colspan="10">
+						<p class="nocar">등록된 차량이 없습니다.</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
