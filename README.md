@@ -22,7 +22,7 @@
 
 #### 4. Documents
 ##### API
-    추후 추가 예정
+    카카오 API
 ##### ERD
 ![DB](sharingcarDB.png)
 

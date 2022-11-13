@@ -29,6 +29,7 @@ public class User {
 	private boolean emailAuthYn;
 	private String emailAuthKey;
 	private LocalDateTime emailAuthDt;
+	private boolean adminYn;
 
 
 }

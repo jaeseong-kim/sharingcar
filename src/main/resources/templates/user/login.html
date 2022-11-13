@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>자차보단 공유차, SHARINGCAR</title>
+</head>
+<body>
+  <h1>로그인</h1>
+  <div th:text="${errorMessage}"></div>
+  <form method="post">
+    <div>
+      <input type="text" name="username" placeholder="abc@naver.com"/>
+    </div>
+    <div>
+      <input type="password" name="password" placeholder="password"/>
+    </div>
+    <div>
+      <button type="submit">로그인</button>
+    </div>
+  </form>
+</body>
+</html>
