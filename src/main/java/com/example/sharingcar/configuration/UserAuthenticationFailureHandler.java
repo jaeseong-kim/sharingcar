@@ -23,7 +23,7 @@ public class UserAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 
 		setUseForward(true);
 		setDefaultFailureUrl("/user/login?error=true");
-		request.setAttribute("errorMessage", error.getS());
+		request.setAttribute("errorMessage", error.getMessage());
 
 		super.onAuthenticationFailure(request, response, exception);
 	}
