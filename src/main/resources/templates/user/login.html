@@ -3,20 +3,44 @@
 <head>
 	<meta charset="UTF-8">
 	<title>자차보단 공유차, SHARINGCAR</title>
+  <style>
+    .login {
+      margin: 70px auto auto;
+      width: 200px;
+      height: 230px;
+      border: 1px solid black;
+    }
+    .login h1 {
+      margin-left: 13px;
+    }
+    .login .input{
+      text-align: center;
+    }
+    .login #btn{
+      text-align: right;
+      margin-right: 14px;
+    }
+    #error{
+      color: #777777;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <h1>로그인</h1>
-  <div th:text="${errorMessage}"></div>
-  <form method="post">
-    <div>
-      <input type="text" name="username" placeholder="abc@naver.com"/>
-    </div>
-    <div>
-      <input type="password" name="password" placeholder="password"/>
-    </div>
-    <div>
-      <button type="submit">로그인</button>
-    </div>
-  </form>
+  <div class="login">
+    <h1>로그인</h1>
+    <div id="error" th:text="${errorMessage}"></div>
+    <form method="post">
+      <div class="input">
+        <input type="text" name="username" placeholder="abc@naver.com"/>
+      </div>
+      <div class="input">
+       <input type="password" name="password" placeholder="password"/>
+      </div>
+      <div id="btn">
+        <button type="submit">로그인</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>

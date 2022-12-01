@@ -1,10 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<title>자차보단 공유차, SHARINGCAR</title>
+	<style>
+    .list table{
+      width: 100%;
+			margin: 10px auto;
+      border-collapse: collapse;
+    }
+    .list table th{
+      font-size: 15px;
+    }
+    .list table th, .list table td{
+      border: solid 1px #000;
+    }
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+	<script>
+		$(function (){
+
+      $(".cancel").on('click',function(){
+        if(!confirm('예약을 취소하겠습니까?')){
+          return false;
+				}
+
+        var url = '/api/reserve/cancel/';
+        var parameter = {
+          reservationId : this.dataset.id
+				};
+
+        axios.post(url,parameter).then(function (response) {
+          response.data = response.data || {};
+          response.data.header = response.data.header || {};
+
+          if(!response.data.header.result){
+            alert(response.data.header.message);
+            return false;
+          }
+
+          alert(response.data.header.message);
+          location.href='/user/info';
+
+        }).catch(function (err) {
+					console.log(err);
+        });
+
+        return false;
+			});
+		});
+	</script>
 </head>
 <body>
   <h1>마이 페이지</h1>
+	<div>
+		<a href="/">홈으로 가기</a>
+	</div>
+	<div class="list">
+		<table >
+			<thead>
+				<tr>
+					<th>차량이름</th>
+					<th>차종</th>
+					<th>위치</th>
+					<th>시작시간</th>
+					<th>종료시간</th>
+					<th>보험유무</th>
+					<th>예약상태</th>
+					<th>비고</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="x : ${list}">
+					<td th:text="${x.carNumber.carName}"/>
+					<td th:text="${x.type}"/>
+					<td th:text="${x.location}"/>
+					<td th:text="${x.startTime}"/>
+					<td th:text="${x.endTime}"/>
+					<td th:text="${x.insuranceYn}"/>
+					<td>
+						<span th:if="${x.status eq true}">예약중</span>
+						<span th:if="${x.status eq false}">취소</span>
+					</td>
+					<td>
+						<div th:if="${x.status eq true}">
+							<button class="cancel" th:data-id="${x.reservationId}">취소</button>
+						</div>
+						<div th:unless="${x.status eq true}"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>
