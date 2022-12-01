@@ -1,7 +1,13 @@
 package com.example.sharingcar.user.controller;
 
+import com.example.sharingcar.car.service.CarService;
+import com.example.sharingcar.reserve.entity.Reserve;
+import com.example.sharingcar.reserve.service.ReserveService;
+import com.example.sharingcar.user.entity.User;
 import com.example.sharingcar.user.model.UserInput;
 import com.example.sharingcar.user.service.UserService;
+import java.security.Principal;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
 	private final UserService userService;
+	private final CarService carService;
+	private final ReserveService reserveService;
 
 	@GetMapping("/user/register")
 	public String register() {
@@ -47,7 +55,15 @@ public class UserController {
 	}
 
 	@GetMapping("/user/info")
-	public String info() {
+	public String info(Model model, Principal principal) {
+
+		User user = userService.getUser(principal.getName());
+		List<Reserve> list = reserveService.listForMyPage(user);
+
+		model.addAttribute("list", list);
+
 		return "user/info";
 	}
+
+
 }
