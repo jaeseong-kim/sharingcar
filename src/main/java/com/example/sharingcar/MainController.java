@@ -13,7 +13,6 @@ public class MainController {
 		return "index";
 	}
 
-
 	@GetMapping("/error/denied")
 	public String error() {
 

@@ -3,52 +3,102 @@
 <head>
 	<meta charset="UTF-8">
 	<title>자차보단 공유차, SHARINGCAR</title>
-</head>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-  window.onload = function () {
-    document.getElementById("find_address").addEventListener("click", function () {
-      new daum.Postcode({
-        oncomplete: function (data) {
-          document.getElementById("user_address").value = data.address;
-        }
-      }).open();
-    });
-  }
+	<style>
+		.register{
+			margin: 50px auto auto;
+			width: 250px;
+      height: 520px;
+			border: 1px solid black;
+		}
+		.register h1{
+			margin-left: 10px;
+		}
+		.register .input {
+      text-align: center;
+    }
+		.font{
+			margin-top: 3px;
+			margin-left: 10px;
+			margin-bottom: 1px;
+			font-size: 11px;
+			font-weight: bold;
+			color: #777777;
+		}
+		.register #btn_group{
+			margin-top: 5px;
+			margin-right: 7px;
+			text-align: right;
+		}
+	</style>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+  	window.onload = function () {
+    	document.getElementById("find_address").addEventListener("click", function () {
+      	new daum.Postcode({
+        	oncomplete: function (data) {
+          	document.getElementById("user_address").value = data.address;
+        	}
+      	}).open();
+    	});
+  	}
 </script>
+</head>
 <body>
-<form method="post">
-	<div>
-		<input type="email" name="email" placeholder="이메일" required/>
-	</div>
-	<div>
-		<input type="password" name="password" placeholder="비밀번호" required/>
-	</div>
-	<div>
-		<input type="password" name="repassword" placeholder="비밀번호 확인" required/>
-	</div>
-	<div>
-		<input type="text" name="name" placeholder="이름" required/>
-	</div>
-	<div>
-		<input type="text" name="birth" placeholder="1990-01-09" required/>
-	</div>
-	<div>
-		<input type="tel" name="phone" placeholder="010-1234-5678" required/>
-	</div>
-	<div>
-		<input type="text" name="license" placeholder="00-00-000000-00" required/>
-	</div>
-	<div>
-		<input type="text" id="user_address" name="address" size="30" placeholder="주소" required/>
-	</div>
-	<div>
-		<input type="text" name="detail" size="30" placeholder="상세주소" required/>
-	</div>
-	<div>
-		<button type="button" id="find_address">주소찾기</button>
-		<button type="submit">확인</button>
-	</div>
-</form>
+<div class="register">
+	<h1>회원 가입</h1>
+	<form method="post">
+		<div class="font">이메일</div>
+		<div class="input">
+			<input type="email" name="email" size="30" placeholder="ex)abc@naver.com" required/>
+		</div>
+
+		<div class="font">비밀번호 확인</div>
+		<div class="input">
+			<input type="password" name="repassword" size="30" placeholder="비밀번호 재입력" required/>
+		</div>
+
+		<div class="font">비밀번호</div>
+		<div class="input">
+			<input type="password" name="password" size="30" placeholder="8자 이상" required/>
+		</div>
+
+		<div class="font">이름</div>
+		<div class="input">
+			<input type="text" name="name" size="30" placeholder="홍길동" required/>
+		</div>
+
+		<div class="font">생년월일</div>
+		<div class="input">
+			<input type="text" name="birth" size="30" placeholder="ex)2022-01-01" required/>
+		</div>
+
+		<div class="font">전화번호</div>
+		<div class="input">
+			<input type="tel" name="phone" size="30" placeholder="010-1234-5678" required/>
+		</div>
+
+		<div class="font">운전면허번호</div>
+		<div class="input">
+			<input type="text" name="license" size="30" placeholder="12-34-567890-12" required/>
+		</div>
+
+
+		<div class="font">주소</div>
+		<div class="input">
+			<input type="text" id="user_address" name="address" size="30" placeholder="주소" required/>
+		</div>
+
+
+		<div class="font">상세주소</div>
+		<div class="input">
+			<input type="text" name="detail" size="30" placeholder="상세주소" required/>
+		</div>
+
+		<div id="btn_group">
+			<button type="button" class="btn" id="find_address">주소찾기</button>
+			<button type="submit" class="btn">확인</button>
+		</div>
+	</form>
+</div>
 </body>
 </html>

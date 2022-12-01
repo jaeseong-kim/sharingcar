@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -48,8 +49,13 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public List<Car> list() {
-		return carRepository.findAll();
+	public List<Car> listForAdmin() {
+		return carRepository.findAll(Sort.by("carNumber"));
+	}
+
+	@Override
+	public List<Car> listForUser() {
+		return carRepository.findByStatus();
 	}
 
 	@Override
@@ -69,5 +75,16 @@ public class CarServiceImpl implements CarService {
 		carRepository.save(car);
 
 		return true;
+	}
+
+	@Override
+	public Car findCar(String carNumber) {
+		Optional<Car> optionalCar = carRepository.findById(carNumber);
+		if(optionalCar.isEmpty()){
+			return null;
+		}
+
+		Car car = optionalCar.get();
+		return car;
 	}
 }

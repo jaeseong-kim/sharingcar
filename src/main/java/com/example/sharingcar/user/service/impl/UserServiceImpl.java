@@ -98,4 +98,15 @@ public class UserServiceImpl implements UserService {
 			user.getEmail(), user.getPassword(), grantedAuthorityList
 		);
 	}
+
+	@Override
+	public User getUser(String email) {
+
+		Optional<User> optionalUser = userRepository.findById(email);
+		if(optionalUser.isEmpty()){
+			return null;
+		}
+
+		return optionalUser.get();
+	}
 }

@@ -41,6 +41,30 @@
     #pagination a {display:inline-block;margin-right:10px;}
     #pagination .on {font-weight: bold; cursor: default;color:#777;}
 	</style>
+	<style>
+		.form{
+			width: 200px;
+			height: 340px;
+			margin: 10px auto;
+			border: 1px solid black;
+		}
+		.font{
+			margin-top: 5px;
+			margin-left: 10px;
+			text-align: left;
+			font-size: 11px;
+			color: #777777;
+			font-weight: bold;
+		}
+		.input{
+			margin-left: 10px;
+		}
+		.btn{
+			margin-top: 5px;
+			margin-right: 20px;
+			text-align: right;
+		}
+	</style>
 </head>
 <body>
 	<h1>차량 추가</h1>
@@ -282,37 +306,46 @@
       }
     }
 	</script>
-	<div>
+	<div class="form">
 		<form method="post">
-			<div>
-				번호
+
+			<div class="font">번호</div>
+			<div class="input">
 				<input type="text" name="carNumber" placeholder="ex)12가3456" required/>
 			</div>
-			<div>
-				이름
+
+			<div class="font">이름</div>
+			<div class="input">
 				<input tpye="text" name="carName" placeholder="ex)더뉴아반떼" required/>
 			</div>
-			<div>
-				종류
+
+			<div class="font">종류</div>
+			<div class="input">
 				<input type="text" name="carType" placeholder="ex)SUV" required/>
 			</div>
-			<div>
-				주차 위치
+
+			<div class="font">주차 위치</div>
+			<div class="input">
 				<input type="text" name="location" placeholder="ex)서울특별시 종로구" required/>
 			</div>
-			<div>
-				대여료(10분단위)
-				<input type="number" name="rentalFee" placeholder="10분기준" required/>
+
+			<div class="font">대여료(10분단위)</div>
+			<div class="input">
+				<input type="number" step="10" name="rentalFee" placeholder="10분기준" required/>
 			</div>
-			<div>
-				보혐료(10분단위)
-				<input type="number" name="insuranceFee" placeholder="10분기준" required/>
+
+			<div class="font">보혐료(10분단위)</div>
+			<div class="input">
+				<input type="number" step="10" name="insuranceFee" placeholder="10분기준" required/>
 			</div>
-			<div>
-				주행료
-				<input type="number" name="drivingFee" placeholder="km당 주행료" required/>
+
+			<div class="font">주행료</div>
+			<div class="input">
+				<input type="number" step="10" name="drivingFee" placeholder="km당 주행료" required/>
 			</div>
-			<button type="submit">등록</button>
+			<div class="btn">
+				<button type="submit">등록</button>
+			</div>
 		</form>
 	</div>
 </body>

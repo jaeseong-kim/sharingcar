@@ -6,10 +6,16 @@ import java.util.List;
 
 public interface CarService {
 
+
 	boolean addCar(CarInput carInput);
+
 	boolean deleteCar(String parameter);
 
-	List<Car> list();
+	List<Car> listForAdmin();
+
+	List<Car> listForUser();
+
+	Car findCar(String carNumber);
 
 	boolean changeStatus(String carNumber);
 }

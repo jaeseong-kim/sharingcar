@@ -19,7 +19,7 @@ public class AdminCarController {
 	@GetMapping("/admin/car/car_manage")
 	public String carManage(Model model) {
 
-		List<Car> list = carService.list();
+		List<Car> list = carService.listForAdmin();
 		model.addAttribute("list", list);
 		return "admin/car/car_manage";
 	}
