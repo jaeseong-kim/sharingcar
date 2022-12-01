@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>자차보단 공유차, SHARINGCAR</title>
+	<style>
+		.list{
+			margin : 30px auto;
+		}
+		.list table {
+			width : 100%;
+			margin-top: 10px;
+			border-collapse: collapse;
+		}
+    .list table th{
+      font-size: 15px;
+    }
+    .list table th, .list table td{
+      border: solid 1px #000;
+    }
+		.nocar{
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<h1>차량 리스트</h1>
+	<div class="list">
+		<div>
+			<a href="/">홈</a>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>차량 이름</th>
+					<th>위치</th>
+					<th>대여료</th>
+					<th>보험료</th>
+					<th>주행료</th>
+					<th>비고</th>
+				</tr>
+			</thead>
+			<tbody th:each="x : ${list}">
+				<tr>
+					<td th:text="${x.carName}"></td>
+					<td th:text="${x.location}"></td>
+					<td th:text="${x.rentalFeePerTenMin}"></td>
+					<td th:text="${x.insuranceFeePerTenMin}"></td>
+					<td th:text="${x.drivingFeePerKm}"></td>
+					<td>
+						<a th:href="'/reserve/reserve/'+${x.carNumber}">예약</a>
+					</td>
+				</tr>
+				<tr th:if="${#lists.size(list)<1}">
+					<td colspan="6">
+						<p class="nocar">등록된 차량이 없습니다.</p>
+					</td>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>자차보단 공유차, SHARINGCAR</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
+				type="text/css"/>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css"
+				type="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+	<script>
+    $(function () {
+      $("#dateStart").datepicker({
+        changeMonth: true,
+        minDate: 0,
+        closeText: '닫기',
+        dateFormat: "yy-mm-dd",
+        showMonthAfterYear: true,
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
+          '10월', '11월', '12월'],
+        onClose: function (selectedDt) {
+          if(selectedDt.val()===""){
+            $("#dateEnd").datepicker("option", "minDate", 0);
+          }else {
+            $("#dateEnd").datepicker("option", "minDate", selectedDt);
+          }
+        }
+      });
+
+      $("#dateEnd").datepicker({
+        changeMonth: true,
+				minDate: 0,
+        closeText: '닫기',
+        dateFormat: "yy-mm-dd",
+        showMonthAfterYear: true,
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
+          '10월', '11월', '12월'],
+        onClose: function (selectedDt) {
+					if($("#dateStart").val() > selectedDt){
+            alert("날짜를 다시 조정해주세요");
+					}
+          $("#dateStart").datepicker("option", "maxDate", selectedDt);
+        }
+      });
+
+			$("#timeStart").timepicker({
+				timeFormat: 'HH:mm',
+				interval: 10,
+				dynamic: false
+			});
+
+      $("#timeEnd").timepicker({
+        timeFormat: 'HH:mm',
+				interval: 10,
+				dynamic: false
+			});
+
+    $("#submitForm").on('submit',function () {
+      if(!confirm('차량 예약을 하시겠습니까?')){
+        return false;
+			}
+
+			var $thisForm = $(this);
+      var url = '/api/reserve/req';
+
+      var parameter = {
+				carNumber : $thisForm.find('input[name=carNumber]').val(),
+				dateStart : $thisForm.find('input[id=dateStart]').val(),
+				timeStart : $thisForm.find('input[id=timeStart]').val(),
+				dateEnd : $thisForm.find('input[id=dateEnd').val(),
+				timeEnd : $thisForm.find('input[id=timeEnd]').val(),
+				insurance : $('input[name=insurance]:checked').val()
+      };
+
+      axios.post(url,parameter).then(function(response){
+        response.data = response.data || {};
+				response.data.header = response.data.header || {};
+
+        if(!response.data.header.result){
+          alert(response.data.header.message);
+          return false;
+				}
+
+        alert(response.data.header.message);
+        alert("차량 예약이 되었습니다.");
+				location.href='/';
+
+
+			}).catch(function(err){
+				console.log(err);
+			});
+
+      return false;
+    });
+    });
+	</script>
+	<style>
+		.car_info{
+			margin: 10px auto;
+		}
+		.car_info table{
+			margin-top: 10px;
+			width: 100%;
+			border-collapse: collapse;
+		}
+		.car_info table th, .car_info table td{
+      border: solid 1px #000;
+			text-align: center;
+		}
+		.reserved_time table{
+			margin-top: 30px;
+			width: 100%;
+			border-collapse: collapse;
+		}
+		.reserved_time table th, td{
+			border: solid 1px #000000;
+			text-align: center;
+		}
+
+		.form{
+			width: 230px;
+			height: 170px;
+			margin: 10px auto auto;
+			text-align: left;
+			border: 1px solid black;
+		}
+
+		.font{
+			margin-top: 5px;
+			margin-left: 10px;
+			font-size: 11px;
+			color: #777777;
+			font-weight: bold;
+		}
+
+		.input{
+			margin-left: 10px;
+		}
+
+		#btn{
+			margin-right: 10px;
+			text-align: right;
+		}
+
+		.nocar{
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<h1>예약 상세 페이지</h1>
+	<div class="car_info">
+		<div>
+			<a href="/">홈</a>ㅣ
+			<a href="/reserve/reserve">공유 차량</a>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">차량이름</th>
+					<th>종류</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="2" th:text="${car.carName}"/>
+					<td th:text="${car.type}"/>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th colspan="3">위치</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="3" th:text="${car.location}"/>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th>대여료</th>
+					<th>보험료</th>
+					<th>주행료</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${car.rentalFeePerTenMin}"/>
+					<td th:text="${car.insuranceFeePerTenMin}"/>
+					<td th:text="${car.drivingFeePerKm}"/>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="reserved_time">
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">예약 시간</th>
+				</tr>
+				<tr>
+					<th>시작 시간</th>
+					<th>종료 시간</th>
+				</tr>
+			</thead>
+			<tbody th:each="r : ${list}">
+				<tr>
+					<td th:text="${r.startTime}"></td>
+					<td th:text="${r.endTime}"></td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr th:if="${#lists.size(list)<1}">
+					<td colspan="2">
+						<p class="nocar">예약된 차량이 없습니다.</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="form">
+		<form id="submitForm" method="post">
+			<div class="font">시작일</div>
+			<div class="input">
+				<input type="text" id="dateStart" size="10" placeholder="날짜입력" readonly required/>
+				<input type="text" id="timeStart" size="10" placeholder="시간입력" readonly required/>
+			</div>
+			<div class="font">종료일</div>
+			<div class="input">
+				<input type="text" id="dateEnd" size="10" placeholder="날짜입력" readonly required/>
+				<input type="text" id="timeEnd" size="10" placeholder="시간입력" readonly required/>
+			</div>
+
+			<div class="font">보험 가입</div>
+			<div class="input">
+				<input type="radio" id="insuranceYes" name="insurance" value="true" required/>예
+				ㅣ
+				<input type="radio" id="insuranceNo" name="insurance" value="false"/>아니오
+			</div>
+			<input type="hidden" name="carNumber" th:value="${car.carNumber}"/>
+			<div id="btn">
+				<button type="submit">예약</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
