@@ -22,7 +22,7 @@
 
 #### 4. Documents
 ##### API
-    카카오 API
+    카카오 지도 API, 카카오 주소 API
 ##### ERD
 ![DB](sharingcarDB.png)
 
